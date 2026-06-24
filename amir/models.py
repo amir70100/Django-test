@@ -1,6 +1,12 @@
 from django.db import models
 from django.utils import timezone
 
+class category(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
 class post(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)
@@ -11,11 +17,13 @@ class post(models.Model):
     published_at = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=10)
     imaje = models.ImageField(upload_to='amir/',default='amir/default.jpg')
+    category = models.ManyToManyField(category)
 
     def __str__(self):
         return self.title
 
-    
+    def snippets(self):
+        return self.content[:100] + "..."
 
 
 # Create your models here.
