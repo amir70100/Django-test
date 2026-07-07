@@ -107,11 +107,11 @@
 						</div>
 						<a class="posts-title" href=#><h3>{{post.title}}</h3></a>
 						<p class="excert">
-							{{post.snippet}}
-							{{post.imaje}}
+							{{post.snippets}}
 						</p>
 						<a href="{% url 'website:blog-single' post.id %}" class="primary-btn">View More</a>
 					</div>	
+				</div>
 					{% endfor %}								
                     <nav class="blog-pagination justify-content-center d-flex">
                         <ul class="pagination">
