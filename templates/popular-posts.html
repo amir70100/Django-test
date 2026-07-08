@@ -1,0 +1,18 @@
+<div class="single-sidebar-widget popular-post-widget">
+	<h4 class="popular-title">Popular Posts</h4>
+	<div class="popular-post-list">
+		{% for popular_post in popular_posts %}
+		<div class="single-post-list d-flex flex-row align-items-center">
+			<div class="thumb">
+				<img class="img-fluid" src="{{ popular_post.imaje.url }}" alt="{{ popular_post.title }}">
+			</div>
+			<div class="details">
+				<a href="{% url 'website:blog-single' popular_post.id %}"><h6>{{ popular_post.title }}</h6></a>
+				<p>{{ popular_post.published_at|date:"D/d/M/Y" }}</p>
+			</div>
+		</div>
+		{% empty %}
+		<p>No posts yet.</p>
+		{% endfor %}
+	</div>
+</div>
