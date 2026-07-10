@@ -1,17 +1,29 @@
 from django.shortcuts import get_object_or_404, render
+from django.db.models import Q
 from amir.models import post
 
 def get_popular_posts():
-    return post.objects.filter(is_active=True).order_by('-published_at')[:3]
+    return post.objects.filter(is_active=True).select_related('author').order_by('-published_at')[:3]
 
 def index(request):
     return render(request, "index.html")
 
 def blog_home(request):
-    posts = post.objects.filter(is_active=True).order_by('-published_at')
+    query = request.GET.get('q', '').strip()
+    posts = post.objects.filter(is_active=True).select_related('author').prefetch_related('category').order_by('-published_at')
+    if query:
+        posts = posts.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(category__name__icontains=query) |
+            Q(author__username__icontains=query) |
+            Q(author__first_name__icontains=query) |
+            Q(author__last_name__icontains=query)
+        ).distinct()
     content = {
         'posts': posts,
         'popular_posts': get_popular_posts(),
+        'query': query,
     }
     return render(request, "blog-home.html", content)
 
@@ -21,7 +33,7 @@ def about(request):
 def blog_single(request, pid=None):
     selected_post = None
     if pid is not None:
-        selected_post = get_object_or_404(post, id=pid, is_active=True)
+        selected_post = get_object_or_404(post.objects.select_related('author').prefetch_related('category'), id=pid, is_active=True)
     return render(request, "blog-single.html", {
         'post': selected_post,
         'popular_posts': get_popular_posts(),

@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 
 class category(models.Model):
@@ -8,6 +9,7 @@ class category(models.Model):
         return self.name
 
 class post(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="posts")
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)
     content = models.TextField()
@@ -24,6 +26,11 @@ class post(models.Model):
 
     def snippets(self):
         return self.content[:100] + "..."
+
+    def author_name(self):
+        if not self.author:
+            return "Admin"
+        return self.author.get_full_name() or self.author.username
 
 
 # Create your models here.
