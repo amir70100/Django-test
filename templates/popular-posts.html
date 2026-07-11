@@ -4,7 +4,7 @@
 		{% for popular_post in popular_posts %}
 		<div class="single-post-list d-flex flex-row align-items-center">
 			<div class="thumb">
-				<img class="img-fluid" src="{{ popular_post.imaje.url }}" alt="{{ popular_post.title }}">
+				<img class="img-fluid" src="{{ popular_post.image.url }}" alt="{{ popular_post.title }}">
 			</div>
 			<div class="details">
 				<a href="{% url 'website:blog-single' popular_post.id %}"><h6>{{ popular_post.title }}</h6></a>

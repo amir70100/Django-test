@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'amir.apps.AmirConfig',
+    'amir.apps.AmirConfig',
 ]
 
 MIDDLEWARE = [
