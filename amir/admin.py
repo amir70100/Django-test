@@ -1,6 +1,5 @@
 from django.contrib import admin
-
-from amir.models import Category, Post
+from amir.models import Category, Post, Contact, NewsLetter
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -21,5 +20,18 @@ class PostAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
+class ContactAdmin(admin.ModelAdmin):
+    date_hierarchy = 'created_at'
+    list_display = ['name', 'email', 'subject', 'created_at']
+    search_fields = ['name', 'email', 'subject', 'message']
+
+
+class NewsLetterAdmin(admin.ModelAdmin):
+    list_display = ['email']
+    search_fields = ['email']
+
+
 admin.site.register(Category)
 admin.site.register(Post, PostAdmin)
+admin.site.register(Contact, ContactAdmin)
+admin.site.register(NewsLetter, NewsLetterAdmin)

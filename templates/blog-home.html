@@ -115,33 +115,63 @@
 					{% empty %}
 					<div class="single-post row">
 						<div class="col-lg-12">
-							<p>No posts found{% if query %} for "{{ query }}"{% endif %}.</p>
+							<p>No posts found{% if query %} for "{{ query }}"{% endif %}{% if tag_name %} with tag "{{ tag_name }}"{% endif %}.</p>
 						</div>
 					</div>
 					{% endfor %}								
+                    {% if posts.has_other_pages %}
                     <nav class="blog-pagination justify-content-center d-flex">
                         <ul class="pagination">
+                            {% if posts.has_previous %}
                             <li class="page-item">
-                                <a href="#" class="page-link" aria-label="Previous">
+                                <a href="?page={{ posts.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if tag_name %}&tag={{ tag_name }}{% endif %}" class="page-link" aria-label="Previous">
                                     <span aria-hidden="true">
                                         <span class="lnr lnr-chevron-left"></span>
                                     </span>
                                 </a>
                             </li>
-                            <li class="page-item"><a href="#" class="page-link">01</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">02</a></li>
-                            <li class="page-item"><a href="#" class="page-link">03</a></li>
-                            <li class="page-item"><a href="#" class="page-link">04</a></li>
-                            <li class="page-item"><a href="#" class="page-link">09</a></li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link" aria-label="Previous">
+                                    <span aria-hidden="true">
+                                        <span class="lnr lnr-chevron-left"></span>
+                                    </span>
+                                </span>
+                            </li>
+                            {% endif %}
+
+                            {% for num in posts.paginator.page_range %}
+                                {% if posts.number == num %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ num|stringformat:"02d" }}</span>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if tag_name %}&tag={{ tag_name }}{% endif %}" class="page-link">{{ num|stringformat:"02d" }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if posts.has_next %}
                             <li class="page-item">
-                                <a href="#" class="page-link" aria-label="Next">
+                                <a href="?page={{ posts.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if tag_name %}&tag={{ tag_name }}{% endif %}" class="page-link" aria-label="Next">
                                     <span aria-hidden="true">
                                         <span class="lnr lnr-chevron-right"></span>
                                     </span>
                                 </a>
                             </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link" aria-label="Next">
+                                    <span aria-hidden="true">
+                                        <span class="lnr lnr-chevron-right"></span>
+                                    </span>
+                                </span>
+                            </li>
+                            {% endif %}
                         </ul>
                     </nav>
+                    {% endif %}
 				</div>
 				<div class="col-lg-4 sidebar-widgets">
 					<div class="widget-wrap">
