@@ -1,8 +1,10 @@
 from django.contrib import admin
 from amir.models import Category, Post, Contact, NewsLetter
+from django_summernote.admin import SummernoteModelAdmin
 
 
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(SummernoteModelAdmin):
+    summernote_fields = ('content',)
     date_hierarchy = 'published_at'
     empty_value_display = '-empty-'
     list_display = ['email', 'title', 'slug', 'author', 'is_active']
@@ -35,3 +37,4 @@ admin.site.register(Category)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Contact, ContactAdmin)
 admin.site.register(NewsLetter, NewsLetterAdmin)
+

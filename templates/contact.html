@@ -59,6 +59,7 @@
 					<div class="row">
 					    {% csrf_token %}
 						<div class="col-lg-12">
+							{{form.captcha}}
 							{% if messages %}
 								{% for message in messages %}
 									<div class="alert-msg" style="text-align: left; color: {% if message.tags == 'error' %}red{% else %}green{% endif %}; mb-10">{{ message }}</div>

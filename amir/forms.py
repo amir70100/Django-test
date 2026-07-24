@@ -1,5 +1,8 @@
 from django import forms
 from amir.models import Post, Contact, NewsLetter
+from captcha.fields import CaptchaField
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+
 
 
 class NameForm(forms.Form):
@@ -10,6 +13,7 @@ class NameForm(forms.Form):
 
 
 class ContactForm(forms.ModelForm):
+    captcha = CaptchaField()
     class Meta:
         model = Contact
         fields = '__all__'
@@ -24,3 +28,4 @@ class NewsLetterForm(forms.ModelForm):
     class Meta:
         model = NewsLetter
         fields = '__all__'
+

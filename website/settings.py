@@ -37,6 +37,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'multi_captcha_admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +51,8 @@ INSTALLED_APPS = [
     'robots',
     "debug_toolbar",
     "taggit",
+    'django_summernote',
+    'captcha',
     
 ]
 SITE_ID = 2
@@ -68,6 +71,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'website.urls'
+
+
 
 TEMPLATES = [
     {
