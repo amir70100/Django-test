@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'amir.apps.AmirConfig',
+    'account.apps.AccountConfig',
     'robots',
     "debug_toolbar",
     "taggit",
