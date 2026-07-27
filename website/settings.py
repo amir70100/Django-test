@@ -50,11 +50,9 @@ INSTALLED_APPS = [
     'amir.apps.AmirConfig',
     'account.apps.AccountConfig',
     'robots',
-    "debug_toolbar",
     "taggit",
     'django_summernote',
     'captcha',
-    
 ]
 SITE_ID = 2
 ROBOTS_USE_HOST = False
@@ -62,14 +60,18 @@ ROBOTS_USE_SITEMAP = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
+
+if DEBUG:
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
 ROOT_URLCONF = 'website.urls'
 
@@ -148,8 +150,20 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Whitenoise storage for static files compression
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
 INTERNAL_IPS = [
     
     "127.0.0.1",
     
 ]
+
+LOGIN_URL = 'account:login_view'

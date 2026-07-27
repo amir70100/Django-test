@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from amir.forms import NameForm, ContactForm, PostForm, NewsLetterForm
 from amir.models import Post
+from django.contrib.auth.decorators import login_required
 
 
 def get_popular_posts():
@@ -71,7 +72,7 @@ def blog_single(request, pid=None):
         'popular_posts': get_popular_posts(),
     })
 
-
+@login_required
 def contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
